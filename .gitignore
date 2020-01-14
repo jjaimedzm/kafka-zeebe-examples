@@ -1,0 +1,5 @@
+./kafka-cli-web/node_modules
+./microservices-kafka-web/node_modules
+./zeebe/node_modules
+.DS_Store
+.idea/

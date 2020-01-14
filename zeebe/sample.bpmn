@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_07jolnt" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Zeebe Modeler" exporterVersion="0.7.0-alpha.2">
+  <bpmn:process id="weather-report" name="weather-report" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1ek4y62</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="ServiceTask_1aj1tsb" name="Get weather report">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="get-weather-report" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1ek4y62</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0gv2m5m</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1ek4y62" sourceRef="StartEvent_1" targetRef="ServiceTask_1aj1tsb" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0657ahr" default="SequenceFlow_0q8x1hd">
+      <bpmn:incoming>SequenceFlow_0gv2m5m</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_07dnrbz</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0q8x1hd</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0gv2m5m" sourceRef="ServiceTask_1aj1tsb" targetRef="ExclusiveGateway_0657ahr" />
+    <bpmn:serviceTask id="ServiceTask_0fkm6l0" name="Take an umbrella">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="take-umbrella" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_07dnrbz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0w1mhzi</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_07dnrbz" name="Wet weather" sourceRef="ExclusiveGateway_0657ahr" targetRef="ServiceTask_0fkm6l0">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">weather_code=="2xx" || weather_code=="3xx" || weather_code=="5xx" || weather_code=="6xx"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="ServiceTask_1hjoz1r" name="Leave the umbrella">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="leave-umbrella" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0q8x1hd</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_01hllb7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0q8x1hd" name="Clear weather" sourceRef="ExclusiveGateway_0657ahr" targetRef="ServiceTask_1hjoz1r" />
+    <bpmn:endEvent id="EndEvent_1bgxb5c" name="Done">
+      <bpmn:incoming>SequenceFlow_01hllb7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_01hllb7" sourceRef="ServiceTask_1hjoz1r" targetRef="EndEvent_1bgxb5c" />
+    <bpmn:endEvent id="EndEvent_07mx4dm" name="Done">
+      <bpmn:incoming>SequenceFlow_0w1mhzi</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0w1mhzi" sourceRef="ServiceTask_0fkm6l0" targetRef="EndEvent_07mx4dm" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="weather-report">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="179" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1aj1tsb_di" bpmnElement="ServiceTask_1aj1tsb">
+        <dc:Bounds x="270" y="157" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ek4y62_di" bpmnElement="SequenceFlow_1ek4y62">
+        <di:waypoint x="215" y="197" />
+        <di:waypoint x="270" y="197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0657ahr_di" bpmnElement="ExclusiveGateway_0657ahr" isMarkerVisible="true">
+        <dc:Bounds x="425" y="172" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0gv2m5m_di" bpmnElement="SequenceFlow_0gv2m5m">
+        <di:waypoint x="370" y="197" />
+        <di:waypoint x="425" y="197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0fkm6l0_di" bpmnElement="ServiceTask_0fkm6l0">
+        <dc:Bounds x="530" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_07dnrbz_di" bpmnElement="SequenceFlow_07dnrbz">
+        <di:waypoint x="450" y="172" />
+        <di:waypoint x="450" y="120" />
+        <di:waypoint x="530" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="434" y="93" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1hjoz1r_di" bpmnElement="ServiceTask_1hjoz1r">
+        <dc:Bounds x="530" y="250" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0q8x1hd_di" bpmnElement="SequenceFlow_0q8x1hd">
+        <di:waypoint x="450" y="222" />
+        <di:waypoint x="450" y="290" />
+        <di:waypoint x="530" y="290" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="430" y="303" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1bgxb5c_di" bpmnElement="EndEvent_1bgxb5c">
+        <dc:Bounds x="692" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="697" y="315" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_01hllb7_di" bpmnElement="SequenceFlow_01hllb7">
+        <di:waypoint x="630" y="290" />
+        <di:waypoint x="692" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_07mx4dm_di" bpmnElement="EndEvent_07mx4dm">
+        <dc:Bounds x="692" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="697" y="145" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0w1mhzi_di" bpmnElement="SequenceFlow_0w1mhzi">
+        <di:waypoint x="630" y="120" />
+        <di:waypoint x="692" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
