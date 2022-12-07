@@ -14,7 +14,7 @@
     "clear": "^0.1.0",
     "cli-table3": "^0.5.1",
     "commander": "^4.0.1",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "figlet": "^1.2.4",
     "kafka-node": "^5.0.0",
     "mongoose": "^5.8.3"
