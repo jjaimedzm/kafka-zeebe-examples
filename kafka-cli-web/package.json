@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "commander": "^4.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "install": "^0.13.0",
     "kafka-node": "^5.0.0",
     "npm": "^6.13.4",
